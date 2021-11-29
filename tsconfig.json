@@ -4,7 +4,10 @@
     "target": "esnext",
     "rootDir": "./src",
     "allowJs": true,
-    "outDir": "./build"
+    "outDir": "./build",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "src"

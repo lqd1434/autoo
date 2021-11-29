@@ -1,17 +1,15 @@
-#! /usr/bin/env node
-
-import path = require("path");
-
-const chokidar = require('chokidar');
-const child_process = require('child_process');
-const fs = require("fs");
-const promisify = require('util').promisify;
+import chokidar from 'chokidar';
+import path from "path";
+import {startWorker} from "./worker";
 
 (async ()=>{
-	const configPath = path.resolve(__dirname,'../autoo.config.js')
+	const configPath = path.resolve(process.cwd(),'../autoo.config.js')
 	const config = require(configPath)
-	console.log(config)
-	const watcher = chokidar.watch('./src/components/**', {
+	console.log(process.cwd())
+	console.log(__dirname)
+	const include = config.include as string[];
+	console.log(include.join(' '))
+	const watcher = chokidar.watch(include.join(' '), {
 		cwd:process.cwd(),
 		persistent:true
 	});
@@ -21,15 +19,3 @@ const promisify = require('util').promisify;
 	}))
 })()
 
-const startWorker = async (path)=>{
-	const exist = fs.existsSync(`${process.cwd()}/${path}/index.tsx`)
-	if (!exist){
-		const worker = child_process.fork(`${process.cwd()}/scripts/write.js`)
-		worker.send({path});
-		worker.on('message',(msg)=>{
-			console.log('来自子进程')
-			console.log(msg)
-		})
-	}
-
-}

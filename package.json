@@ -1,14 +1,23 @@
 {
   "name": "autoo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
+  "bin": {
+    "autoo": "build/index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "parcel build ./src/index.ts --out-dir ./build/ --target node",
     "tsc": "tsc"
   },
-  "keywords": [],
+  "files": [
+    "package.json",
+    "build/**"
+  ],
+  "keywords": [
+    "auto"
+  ],
   "author": "",
   "license": "ISC",
   "peerDependencies": {
@@ -16,11 +25,16 @@
     "react-dom": "17.0.2"
   },
   "devDependencies": {
+    "@types/fs-extra": "^9.0.13",
     "@types/node": "^16.11.10",
+    "@types/react": "17.0.37",
+    "@types/react-dom": "17.0.11",
     "parcel-bundler": "^1.12.5",
+    "ts-node": "^10.4.0",
     "typescript": "^4.5.2"
   },
   "dependencies": {
+    "autoo": "^1.0.1",
     "chokidar": "^3.5.2",
     "fs-extra": "^10.0.0"
   }

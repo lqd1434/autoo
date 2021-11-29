@@ -1,4 +1,4 @@
 
 module.exports = {
-	 include:["src"]
+	 include:["./src"]
 }
