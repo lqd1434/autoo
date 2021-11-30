@@ -1,30 +1,14 @@
-const { readFileSync, writeFile } = require('fs-extra');
-const Path = require('path');
+const { readFileSync, writeFileSync } = require('fs-extra');
 
-console.log('我是子进程' + process.argv[2]);
-console.log(process.cwd());
+console.log(`子进程${process.argv[2]}开始创建文件`);
 process.on('message', (msg: any) => {
-  const { targetPath, template } = msg;
-  const fileName = Path.basename(template);
-  console.log(targetPath, 'targetPath');
-  console.log(template, 'template');
-  const content = readFileSync(template);
-  let contentStr = content.toString();
-  contentStr = contentStr.replace(/NAME/g, Path.basename(targetPath));
-  console.log(contentStr);
-
-  writeFile(`${targetPath}/${fileName}`, contentStr, (err) => {
-    if (err) {
-      console.log(err);
-      process.send({
-        status: false,
-        msg: err
-      });
-    } else {
-      process.send({
-        status: true,
-        msg: 'success'
-      });
-    }
-  });
+  const { targetPath, source } = msg;
+  const content = readFileSync(source).toString();
+  try {
+    writeFileSync(targetPath, content);
+    console.log(`创建${targetPath}成功`);
+  } catch (e) {
+    console.log(`创建${targetPath}失败`);
+    console.log(e);
+  }
 });

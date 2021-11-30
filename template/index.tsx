@@ -1,7 +1,7 @@
 import React from 'react';
 
-const B = () => {
+const NAME = () => {
   return <></>;
 };
 
-export default B;
+export default NAME;
