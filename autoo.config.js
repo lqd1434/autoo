@@ -1,4 +1,3 @@
-
 module.exports = {
-	 include:["./src"]
-}
+  include: ['./react/**', './src/**']
+};

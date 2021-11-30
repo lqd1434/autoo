@@ -1,21 +1,18 @@
-import chokidar from 'chokidar';
-import path from "path";
-import {startWorker} from "./worker";
+#!/usr/bin/env node
 
-(async ()=>{
-	const configPath = path.resolve(process.cwd(),'../autoo.config.js')
-	const config = require(configPath)
-	console.log(process.cwd())
-	console.log(__dirname)
-	const include = config.include as string[];
-	console.log(include.join(' '))
-	const watcher = chokidar.watch(include.join(' '), {
-		cwd:process.cwd(),
-		persistent:true
-	});
+const chokidar = require('chokidar');
+const { startWorker } = require('./worker');
+const path = require('path');
 
-	watcher.on('addDir',(path => {
-		startWorker(path)
-	}))
-})()
+(async () => {
+  const configPath = path.resolve(process.cwd(), './autoo.config.js');
+  const paths = require(configPath).include as string[];
+  const watcher = chokidar.watch(paths, {
+    cwd: process.cwd(),
+    persistent: true
+  });
 
+  watcher.on('addDir', (changePath) => {
+    startWorker(changePath);
+  });
+})();
