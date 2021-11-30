@@ -1,26 +1,21 @@
+import { log } from 'util';
+
 const { minify } = require('terser');
 const fs = require('fs');
 const path = require('path');
+const { fork } = require('child_process');
 
 (async () => {
-  const p = path.resolve(__dirname, '../dist');
-  const buildPath = path.resolve(__dirname, '../build');
-  const files = fs.readdirSync(p) as string[];
+  const location = path.resolve(__dirname, '../dist');
+  const files = fs.readdirSync(location) as string[];
+  const writePath = path.resolve(__dirname, './write.js');
+
   const jsFile = files.filter((item) => {
     return /.js$/.test(item);
   });
-  jsFile.forEach((file) => {
-    (async () => {
-      const code = fs.readFileSync(`${p}/${file}`);
-      const result = (await minify(code.toString())).code;
-      try {
-        fs.writeFileSync(`${buildPath}/${file}`, result);
-        console.log('压缩成功', file);
-      } catch (e) {
-        console.log(e);
-      }
-    })();
-  });
 
-  console.log(jsFile);
+  jsFile.forEach((file, index) => {
+    const worker = fork(writePath, [index]);
+    worker.send({ file: file });
+  });
 })();

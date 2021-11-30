@@ -4,7 +4,7 @@
     "target": "ESNext",
     "moduleResolution": "node",
     "rootDir": "./src",
-    "allowJs": true,
+    "allowJs": false,
     "noEmit": false,
     "watch": true,
     "outDir": "./dist",
