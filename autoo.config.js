@@ -1,3 +1,4 @@
 module.exports = {
-  include: ['./react/**', './src/**']
+  include: ['./react/**', './src/**'],
+  template: './template'
 };

@@ -1,8 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-console.log('开始子进程' + process.argv[2]);
-console.log(Date.now());
+console.log('子进程' + process.argv[2]);
 process.on('message', (msg) => {
   const { file } = msg;
   const location = path.resolve(__dirname, `../dist/${file}`);

@@ -1,6 +1,3 @@
-import { log } from 'util';
-
-const { minify } = require('terser');
 const fs = require('fs');
 const path = require('path');
 const { fork } = require('child_process');

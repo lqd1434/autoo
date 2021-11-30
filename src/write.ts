@@ -1,16 +1,19 @@
 const { readFileSync, writeFile } = require('fs-extra');
-const p = require('path');
+const Path = require('path');
 
-console.log('------我是子进程------1111');
+console.log('我是子进程' + process.argv[2]);
 console.log(process.cwd());
 process.on('message', (msg: any) => {
-  const path = msg.path;
-  const content = readFileSync(`${process.cwd()}/template/index.tsx`);
+  const { targetPath, template } = msg;
+  const fileName = Path.basename(template);
+  console.log(targetPath, 'targetPath');
+  console.log(template, 'template');
+  const content = readFileSync(template);
   let contentStr = content.toString();
-  contentStr = contentStr.replace(/NAME/g, p.basename(path));
+  contentStr = contentStr.replace(/NAME/g, Path.basename(targetPath));
   console.log(contentStr);
 
-  writeFile(`${path}/index.tsx`, contentStr, (err) => {
+  writeFile(`${targetPath}/${fileName}`, contentStr, (err) => {
     if (err) {
       console.log(err);
       process.send({
