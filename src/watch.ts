@@ -1,12 +1,17 @@
 import chokidar from 'chokidar';
 import { startWorker } from './worker';
-import { resolveConfigPath } from './path';
+import { resolveConfigPath, resolvePath } from './path';
 import * as signale from 'signale';
+import * as Progress from 'child_process';
+import * as Fs from 'fs-extra';
+
+const isDev = process.env.NODE_ENV === 'development';
 
 export const startWatch = async () => {
-  const configPath = resolveConfigPath();
+  const userConfig = await getConfig();
+  const configPath = isDev ? resolveConfigPath() : resolvePath(__dirname, '../autoo.config.js');
   const config = (await import(configPath)).default;
-  signale.await(config);
+  signale.note(config);
 
   const watchPaths = [...config.include] as string[];
   const watcher = chokidar.watch(watchPaths, {
@@ -17,4 +22,17 @@ export const startWatch = async () => {
   watcher.on('addDir', (change) => {
     startWorker(change, config);
   });
+};
+
+const getConfig = async () => {
+  const configCacheDir = '/Users/liqingdong/Library/Caches';
+  const configCacheFile = resolvePath(process.cwd(), '../../Library/Caches/autoo/autoo.config.js');
+  const configPath = resolvePath(process.cwd(), './autoo.config.ts');
+  if (Fs.existsSync(configPath)) {
+    //编译到缓存目录解析
+    Progress.exec(`tsc ${configPath} --outDir ${configCacheDir}`);
+    return (await import(`${configCacheFile}`)).default;
+  } else {
+    return null;
+  }
 };

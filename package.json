@@ -8,10 +8,10 @@
     ".": "./build/index.js"
   },
   "bin": {
-    "autoo": "dist/index.js"
+    "autoo watch": "dist/src/index.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node ./dist/src/index.js",
     "build": "webpack --config webpack.config.js",
     "dev": "nodemon ./dist/index.js",
     "start": "cross-env NODE_ENV=development ts-node ./src/index.ts",

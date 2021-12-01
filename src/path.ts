@@ -1,4 +1,4 @@
-const Path = require('path');
+import Path from 'path';
 
 export const rootDir = process.cwd();
 export const dirname = __dirname;
