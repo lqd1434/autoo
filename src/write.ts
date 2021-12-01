@@ -1,17 +1,21 @@
-const { readFileSync, writeFileSync } = require('fs-extra');
+import { readFileSync, writeFile } from 'fs-extra';
+import util from 'util';
+import { getBasePath } from './path';
 
+const writeFileAsync = util.promisify(writeFile);
 console.log(`子进程${process.argv[2]}开始创建文件`);
-process.on('message', (msg: any) => {
+process.on('message', async (msg: any) => {
   const { targetPath, source } = msg;
-  const content = readFileSync(source).toString();
+  console.log(targetPath);
+  const content = readFileSync(source);
+  const targetFile = getBasePath(targetPath);
   try {
-    writeFileSync(targetPath, content);
-    console.log(`创建${targetPath}成功`);
+    // @ts-ignore
+    await writeFileAsync(targetPath, content);
+    console.log(`创建${targetFile}成功`);
     process.env.Progress = String(123);
-    process.send(50 * parseInt(process.argv[2]));
   } catch (e) {
-    console.log(`创建${targetPath}失败`);
+    console.log(`创建${targetFile}失败`);
     console.log(e);
-    process.send(1);
   }
 });

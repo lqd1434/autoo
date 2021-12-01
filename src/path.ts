@@ -3,6 +3,10 @@ const Path = require('path');
 export const rootDir = process.cwd();
 export const dirname = __dirname;
 
+export const getBasePath = (path: string) => {
+  return Path.basename(path);
+};
+
 export const resolvePath = (dir: string, path: string) => {
   return Path.resolve(dir, path);
 };
@@ -15,7 +19,7 @@ export const resolveDirPath = (path: string) => {
   return Path.resolve(dirname, path);
 };
 
-export const resolveConfigPath = (path: string = './autoo.config.js') => {
+export const resolveConfigPath = (path: string = './autoo.config.ts') => {
   return Path.resolve(rootDir, path);
 };
 

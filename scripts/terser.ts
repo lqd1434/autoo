@@ -1,6 +1,6 @@
-const fs = require('fs');
-const path = require('path');
-const { fork } = require('child_process');
+import fs from 'fs';
+import path from 'path';
+import { fork } from 'child_process';
 
 (async () => {
   const location = path.resolve(__dirname, '../dist');
@@ -12,6 +12,7 @@ const { fork } = require('child_process');
   });
 
   jsFile.forEach((file, index) => {
+    // @ts-ignore
     const worker = fork(writePath, [index]);
     worker.send({ file: file });
   });

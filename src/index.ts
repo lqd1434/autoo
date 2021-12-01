@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-const { startWatch } = require('./watch');
+import { startWatch } from './watch';
 
 (async () => {
-  startWatch();
+  await startWatch();
 })();
