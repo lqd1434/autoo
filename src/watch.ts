@@ -30,11 +30,12 @@ const getConfig = async () => {
     Progress.exec(`tsc ${configPath} --outDir ${configCacheDir}`);
     return (await import(`${configCacheFile}`)).default;
   } else {
+    signale.warn('未发现配置文件,将使用默认配置');
     return defaultConfig;
   }
 };
 
 const defaultConfig = {
-  include: ['./react/**', './src/**'],
+  include: ['./src/**'],
   template: './template'
 };
