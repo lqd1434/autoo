@@ -1,11 +1,11 @@
-import fs from 'fs';
-import path from 'path';
+import * as Fs from 'fs-extra';
+import * as Path from 'path';
 import { fork } from 'child_process';
 
 (async () => {
-  const location = path.resolve(__dirname, '../dist');
-  const files = fs.readdirSync(location) as string[];
-  const writePath = path.resolve(__dirname, './write.js');
+  const location = Path.resolve(__dirname, '../dist/src');
+  const files = Fs.readdirSync(location) as string[];
+  const writePath = Path.resolve(__dirname, './write.ts');
 
   const jsFile = files.filter((item) => {
     return /.js$/.test(item);

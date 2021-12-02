@@ -2,16 +2,16 @@
   "name": "autoo",
   "version": "1.1.1",
   "description": "",
-  "main": "./dist/src/index.js",
+  "main": "./build/index.js",
   "type": "commonjs",
   "exports": {
-    ".": "./dist/src/index.js"
+    ".": "./build/index.js"
   },
   "bin": {
-    "autoo": "dist/src/index.js"
+    "autoo": "build/index.js"
   },
   "scripts": {
-    "test": "node ./dist/src/index.js",
+    "test": "node ./build/index.js",
     "build": "webpack --config webpack.config.js",
     "dev": "nodemon ./dist/index.js",
     "start": "cross-env NODE_ENV=development ts-node ./src/index.ts",
@@ -20,7 +20,7 @@
   },
   "files": [
     "package.json",
-    "dist/**"
+    "build/**"
   ],
   "keywords": [
     "auto"

@@ -9,8 +9,6 @@ const isDev = process.env.NODE_ENV === 'development';
 
 export const startWatch = async () => {
   const config = await getConfig();
-  // const configPath = isDev ? resolveConfigPath() : resolvePath(__dirname, '../autoo.config.js');
-  // const config = (await import(configPath)).default;
   signale.note(config);
 
   const watchPaths = [...config.include] as string[];
@@ -18,7 +16,6 @@ export const startWatch = async () => {
     cwd: process.cwd(),
     persistent: true
   });
-  signale.star(process.env.NODE_ENV);
   watcher.on('addDir', (change) => {
     startWorker(change, config);
   });
