@@ -332,6 +332,27 @@ array-union@^2.1.0:
   resolved "https://registry.npmjs.org/array-union/-/array-union-2.1.0.tgz#b798420adbeb1de828d84acd8a2e23d3efe85e8d"
   integrity sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==
 
+autoo@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/autoo/-/autoo-1.1.0.tgz#09563e65c3a584a3bc001d6e30970d45c8cf84b5"
+  integrity sha512-Oam3FiQj6OFH+kTRe+gf8SpaWZF1grWV6BjsSTk+ISyT1xXLxWYr7ZXg/DPFBtL3EaeedsN9Tr8a+7+12K1k6Q==
+  dependencies:
+    chalk "^5.0.0"
+    chokidar "^3.5.2"
+    fs-extra "^10.0.0"
+    signale "^1.4.0"
+
+autoo@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.npmjs.org/autoo/-/autoo-1.1.1.tgz#ce7e01e862a755ed0614a458fd3f06731d972110"
+  integrity sha512-8FUlGP+x7n2qi8i0JBwrkWjQThJ3jdkbfIevLioPrDDQHDjO91agmNUa4bja7DfWWqnQg8Dy2ArMoNjlJD5b2w==
+  dependencies:
+    autoo "^1.1.0"
+    chalk "^5.0.0"
+    chokidar "^3.5.2"
+    fs-extra "^10.0.0"
+    signale "^1.4.0"
+
 balanced-match@^1.0.0:
   version "1.0.2"
   resolved "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"

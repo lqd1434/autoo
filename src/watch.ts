@@ -1,6 +1,6 @@
 import chokidar from 'chokidar';
 import { startWorker } from './worker';
-import { resolveConfigPath, resolvePath } from './path';
+import { resolvePath } from './path';
 import * as signale from 'signale';
 import * as Progress from 'child_process';
 import * as Fs from 'fs-extra';
@@ -8,9 +8,9 @@ import * as Fs from 'fs-extra';
 const isDev = process.env.NODE_ENV === 'development';
 
 export const startWatch = async () => {
-  const userConfig = await getConfig();
-  const configPath = isDev ? resolveConfigPath() : resolvePath(__dirname, '../autoo.config.js');
-  const config = (await import(configPath)).default;
+  const config = await getConfig();
+  // const configPath = isDev ? resolveConfigPath() : resolvePath(__dirname, '../autoo.config.js');
+  // const config = (await import(configPath)).default;
   signale.note(config);
 
   const watchPaths = [...config.include] as string[];
@@ -33,6 +33,11 @@ const getConfig = async () => {
     Progress.exec(`tsc ${configPath} --outDir ${configCacheDir}`);
     return (await import(`${configCacheFile}`)).default;
   } else {
-    return null;
+    return defaultConfig;
   }
+};
+
+const defaultConfig = {
+  include: ['./react/**', './src/**'],
+  template: './template'
 };
