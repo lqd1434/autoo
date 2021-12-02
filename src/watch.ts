@@ -22,7 +22,7 @@ export const startWatch = async () => {
 };
 
 const getConfig = async () => {
-  const configCacheDir = '/Users/liqingdong/Library/Caches';
+  const configCacheDir = '/Users/liqingdong/Library/Caches/autoo';
   const configCacheFile = resolvePath(process.cwd(), '../../Library/Caches/autoo/autoo.config.js');
   const configPath = resolvePath(process.cwd(), './autoo.config.ts');
   if (Fs.existsSync(configPath)) {
