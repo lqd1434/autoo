@@ -6,5 +6,4 @@ dist
 dist
 build
 react
-.idea/**
-/dist/
+test

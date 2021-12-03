@@ -12,24 +12,34 @@ export const startWorker = async (change: string, config) => {
   //新增文件夹路径
   const changePath = resolveRootPath(change);
 
+  let sourceFiles=[];
   //模板文件数组
-  const sourceFiles = readdirSync(templatePath);
+  try{
+    sourceFiles = readdirSync(templatePath);
+  }catch(err){
+    signale.error(err);
+  }
 
-  sourceFiles.forEach((source, index) => {
-    (async () => {
-      //目的地文件
-      const targetPath = resolvePath(changePath, `./${source}`);
-      //单个模板文件完整路径
-      const sourceFile = resolvePath(templatePath, source);
+  if (sourceFiles.length !== 0) {
+    sourceFiles.forEach((source, index) => {
+      (async () => {
+        //目的地文件
+        const targetPath = resolvePath(changePath, `./${source}`);
+        //单个模板文件完整路径
+        const sourceFile = resolvePath(templatePath, source);
+  
+        const exist = existsSync(targetPath);
+        if (!exist) {
+          signale.start('新增目录==>', change);
+          signale.debug(writeScript);
+          // @ts-ignore
+          const worker = fork(`${writeScript}`, [index]);
+          worker.send({ targetPath: targetPath, source: sourceFile });
+        }
+      })();
+    });
+  }
+  
 
-      const exist = existsSync(targetPath);
-      if (!exist) {
-        signale.start('新增目录==>', change);
-        signale.debug(writeScript);
-        // @ts-ignore
-        const worker = fork(`${writeScript}`, [index]);
-        worker.send({ targetPath: targetPath, source: sourceFile });
-      }
-    })();
-  });
+  
 };
